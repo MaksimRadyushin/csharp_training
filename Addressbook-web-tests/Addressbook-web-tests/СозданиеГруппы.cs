@@ -40,7 +40,7 @@ namespace Addressbook_web_tests
         }
 
         [Test]
-        public void TheUntitledTestCaseTest()
+        public void СозданиеГруппы()
         {
             driver.Navigate().GoToUrl(baseURL);
             driver.FindElement(By.Name("user")).Click();
@@ -54,13 +54,13 @@ namespace Addressbook_web_tests
             driver.FindElement(By.Name("new")).Click();
             driver.FindElement(By.Name("group_name")).Click();
             driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys("RadyushinGroup");
+            driver.FindElement(By.Name("group_name")).SendKeys("RadyushinGroup1");
             driver.FindElement(By.Name("group_header")).Click();
             driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys("Radyushin");
+            driver.FindElement(By.Name("group_header")).SendKeys("Radyushin1");
             driver.FindElement(By.Name("group_footer")).Click();
             driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys("Radyushin");
+            driver.FindElement(By.Name("group_footer")).SendKeys("Radyushin1");
             driver.FindElement(By.Name("submit")).Click();
             driver.FindElement(By.LinkText("group page")).Click();
             driver.FindElement(By.LinkText("Logout")).Click();
