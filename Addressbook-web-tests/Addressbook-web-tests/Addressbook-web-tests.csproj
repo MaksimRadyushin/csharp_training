@@ -53,9 +53,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContactAttributes.cs" />
     <Compile Include="GroupAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GroupCreationTests.cs" />
+    <Compile Include="ContactCreationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
