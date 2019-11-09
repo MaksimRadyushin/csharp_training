@@ -9,14 +9,12 @@ namespace Addressbook_web_tests
    public class ContactAttributes
     {
         private string firstnameContact;
-        private string middlenameContact;
+        private string middlenameContact = "";
 
-        public ContactAttributes(string firstname, string middlename)
+        public ContactAttributes(string firstnameContact)
         {
-            this.firstnameContact = firstname;
-            this.middlenameContact = middlename;
+            this.firstnameContact = firstnameContact;
         }
-
         public string FirstnameContact
         {
             get

@@ -11,25 +11,64 @@ namespace Addressbook_web_tests
 {
    public class ContactHelper : HelperBase
     {
-    
-        public ContactHelper(IWebDriver driver)
-            : base(driver)
+
+        public ContactHelper(ApplicationManager manager)
+            : base(manager)
         {
+        }
+        public ContactHelper Create(ContactAttributes contact)
+        {
+
+            manager.Navigator.OpenHomePage();
+            NewContact();
+            FillContactForm(contact);
+            SubmitContactCreation();
+            ReturnHomePageContact();
+            return this;
+        }
+        public ContactHelper Remove(int p)
+        {
+
+            manager.Navigator.OpenHomePage();
+            SelectContact(p);
+            RemovalContact();
+            ReturnHomePageContact();
+            return this;
+        }
+        public ContactHelper Modify(int p, ContactAttributes newData)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectContact(p);
+            ModificationContact();
+            FillContactForm(newData);
+            SubmitContactModification();
+            ReturnHomePageContact();
+            return this;
         }
         public ContactHelper NewContact()
         {
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
-
-        public ContactHelper FillContactForm(ContactAttributes ContactAttributes)
+        public ContactHelper RemovalContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
+        public ContactHelper FillContactForm(ContactAttributes contact)
         {
             driver.FindElement(By.Name("firstname")).Click();
             driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(ContactAttributes.FirstnameContact);
+            driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstnameContact);
             driver.FindElement(By.Name("middlename")).Click();
             driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(ContactAttributes.MiddlenameContact);
+            driver.FindElement(By.Name("middlename")).SendKeys(contact.MiddlenameContact);
             return this;
         }
 
@@ -41,7 +80,18 @@ namespace Addressbook_web_tests
 
         public ContactHelper ReturnHomePageContact()
         {
-            driver.FindElement(By.LinkText("home page")).Click();
+            driver.FindElement(By.LinkText("home")).Click();
+            return this;
+        }
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper ModificationContact()
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])")).Click();
             return this;
         }
     }

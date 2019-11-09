@@ -9,16 +9,12 @@ namespace Addressbook_web_tests
    public class GroupAttributes
     {
             private string nameGroup;
-            private string headerGroup;
-            private string footerGroup;
-
-            public GroupAttributes(string name, string header, string footer)
-            {
-                this.nameGroup = name;
-                this.headerGroup = header;
-                this.footerGroup = footer;
-            }
-
+            private string headerGroup = "";
+            private string footerGroup = "";
+        public GroupAttributes(string nameGroup)
+        {
+            this.nameGroup = nameGroup;
+        }
             public string NameGroup
             {
                 get

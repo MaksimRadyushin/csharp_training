@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using NUnit.Framework;
 
 namespace Addressbook_web_tests
 {
@@ -8,12 +12,11 @@ namespace Addressbook_web_tests
         [Test]
         public void ContactCreationTest()
         {
+            ContactAttributes contact = new ContactAttributes("89984899");
+            contact.MiddlenameContact = "5455545";
+
+            app.Contacts.Create(contact);
             app.Auth.Logout();
-            app.Contacts
-                .NewContact()
-                .FillContactForm(new ContactAttributes("m56f64AKS", "5mAf5KdS"))
-                .SubmitContactCreation()
-                .ReturnHomePageContact();
         }           
     }
 }

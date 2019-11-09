@@ -54,6 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appmanager\ApplicationManager.cs" />
+    <Compile Include="Tests\ContactModificationTests.cs" />
+    <Compile Include="Tests\GroupModificationTests.cs" />
+    <Compile Include="Tests\ContactRemovalTests.cs" />
+    <Compile Include="Tests\GroupRemovalTests.cs" />
     <Compile Include="Madel\ContactAttributes.cs" />
     <Compile Include="Appmanager\ContactHelper.cs" />
     <Compile Include="Madel\GroupAttributes.cs" />

@@ -13,13 +13,12 @@ namespace Addressbook_web_tests
         [Test]
         public void GroupCreationTest()
         {
-            app.Navigator.OpenGroupsPage();
+            GroupAttributes group = new GroupAttributes("Majssdd");
+            group.HeaderGroup = "543";
+            group.FooterGroup = "5455";
+
+            app.Groups.Create(group);
             app.Auth.Logout();
-            app.Groups
-                .NewGroup()
-                .FillGroupForm(new GroupAttributes("RaDYUS5HIfNmAKS", "mAfK1S", "Maf4ks"))
-                .SubmitGroupCreation()
-                .ReturnHomePageGroup();
         }                   
     }
 }

@@ -15,6 +15,7 @@ namespace Addressbook_web_tests
         public void SetupTest()
         {
            app = new ApplicationManager();
+
            app.Navigator.OpenHomePage();
            app.Auth.Authorization("admin", "secret");
         }
