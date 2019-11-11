@@ -38,8 +38,7 @@ namespace Addressbook_web_tests
         public ContactHelper Modify(int p, ContactAttributes newData)
         {
             manager.Navigator.OpenHomePage();
-            SelectContact(p);
-            ModificationContact();
+            ModificationContact(p);
             FillContactForm(newData);
             SubmitContactModification();
             ReturnHomePageContact();
@@ -89,9 +88,9 @@ namespace Addressbook_web_tests
             return this;
         }
 
-        public ContactHelper ModificationContact()
+        public ContactHelper ModificationContact(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])")).Click();
+            driver.FindElement(By.XPath("(//tbody//a[contains(@href,'edit')])[" + index + "]")).Click();
             return this;
         }
     }
