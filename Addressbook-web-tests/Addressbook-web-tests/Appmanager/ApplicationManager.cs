@@ -24,7 +24,7 @@ namespace Addressbook_web_tests
         {
             driver = new FirefoxDriver();
            // Thread.Sleep(1000);
-            baseURL = "http://localhost/addressbook";
+            baseURL = "http://localhost";
             loginHelper = new LoginHelper(this);
             navigationHelper = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);

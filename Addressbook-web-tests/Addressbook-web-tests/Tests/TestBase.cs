@@ -17,7 +17,7 @@ namespace Addressbook_web_tests
            app = new ApplicationManager();
 
            app.Navigator.OpenHomePage();
-           app.Auth.Authorization("admin", "secret");
+           app.Auth.Authorization(new AccountData("admin", "secret"));
         }
 
         [TearDown]
