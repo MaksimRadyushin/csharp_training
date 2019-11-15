@@ -20,26 +20,20 @@ namespace Addressbook_web_tests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
-        public ApplicationManager()
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
            // Thread.Sleep(1000);
-            baseURL = "http://localhost";
+            baseURL = "http://localhost/addressbook";
             loginHelper = new LoginHelper(this);
             navigationHelper = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
         }
 
-        public IWebDriver Driver 
-        {
-            get 
-            {
-                return driver;
-            }
-        }
-
-        public void Stop()
+        ~ApplicationManager()
         {
             try
             {
@@ -48,6 +42,24 @@ namespace Addressbook_web_tests
             catch (Exception)
             {
                 // Ignore errors if unable to close the browser
+            }
+        }
+        public static ApplicationManager GetInstance()
+        {
+            if(! app.IsValueCreated)
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigator.OpenHomePage();
+                app.Value = newInstance;
+            }
+            return app.Value;
+        }
+
+        public IWebDriver Driver 
+        {
+            get 
+            {
+                return driver;
             }
         }
 

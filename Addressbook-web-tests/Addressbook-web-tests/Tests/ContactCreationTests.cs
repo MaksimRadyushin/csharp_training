@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Addressbook_web_tests
 {
     [TestFixture]
-    public class ContactCreationTests : TestBase
+    public class ContactCreationTests : AuthTestBase
     {        
         [Test]
         public void ContactCreationTest()
@@ -16,7 +16,7 @@ namespace Addressbook_web_tests
             contact.MiddlenameContact = "5455545";
 
             app.Contacts.Create(contact);
-            app.Auth.Logout();
+            //app.Auth.Logout();
         }           
     }
 }
