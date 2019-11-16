@@ -13,8 +13,8 @@ namespace Addressbook_web_tests
         [Test]
         public void ContactModificationTest()
         {
-            ContactAttributes newData = new ContactAttributes("455");
-            newData.MiddlenameContact = "8454";
+            ContactAttributes newData = new ContactAttributes("test");
+            newData.MiddlenameContact = "test2";
 
             app.Contacts.Modify(1, newData);
            // app.Auth.Logout();

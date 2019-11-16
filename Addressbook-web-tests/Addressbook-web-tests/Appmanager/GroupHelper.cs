@@ -30,23 +30,37 @@ namespace Addressbook_web_tests
 
         public GroupHelper Remove(int p)
         {
-
             manager.Navigator.OpenGroupsPage();
+            ValidationCreationGroup();
             SelectGroup(p);
             RemovalGroup();
             ReturnHomePageGroup();
             return this;
         }
+              
         public GroupHelper Modify(int p, GroupAttributes newData)
         {
             manager.Navigator.OpenGroupsPage();
+            ValidationCreationGroup();
             SelectGroup(p);
             ModificationGroup();
             FillGroupForm(newData);
             SubmitGroupModification();
             ReturnHomePageGroup();
-
             return this;
+        }
+
+        private void ValidationCreationGroup()
+        {
+            if (!IsElementPresent(By.Name("selected[]")))
+            {
+                NewGroup();
+                GroupAttributes newGroup = new GroupAttributes("newGroup");
+                FillGroupForm(newGroup);
+                SubmitGroupCreation();
+                ReturnHomePageGroup();
+
+            }
         }
 
         public GroupHelper NewGroup()
@@ -57,6 +71,7 @@ namespace Addressbook_web_tests
 
         public GroupHelper RemovalGroup()
         {
+
             driver.FindElement(By.Name("delete")).Click(); ;
             return this;
         }
@@ -97,5 +112,5 @@ namespace Addressbook_web_tests
             driver.FindElement(By.Name("edit")).Click();
             return this;
         }
-    }
+   }
 }

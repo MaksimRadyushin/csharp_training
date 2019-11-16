@@ -51,6 +51,5 @@ namespace Addressbook_web_tests
                 && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text
                 == "(" + account.Username + ")";
         }
-
    }
 }

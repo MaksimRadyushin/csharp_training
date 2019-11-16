@@ -13,7 +13,7 @@ namespace Addressbook_web_tests
         [Test]
         public void GroupModificationTest()
         {
-            GroupAttributes newData = new GroupAttributes("5874");
+            GroupAttributes newData = new GroupAttributes("jgfjgh");
             newData.HeaderGroup = null;
             newData.FooterGroup = null;
 
