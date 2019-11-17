@@ -13,6 +13,8 @@ namespace Addressbook_web_tests
         [Test]
         public void GroupRemovalTest()
         {
+            app.Navigator.OpenGroupsPage();
+            app.Groups.ValidationCreationGroup();
             app.Groups.Remove(1);
             //app.Auth.Logout();
         }

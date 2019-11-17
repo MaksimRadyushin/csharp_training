@@ -13,6 +13,8 @@ namespace Addressbook_web_tests
         [Test]
         public void ContactRemovalTest()
         {
+            app.Navigator.OpenHomePage();
+            app.Contacts.ValidationCreationContact();
             app.Contacts.Remove(1);
            // app.Auth.Logout();
         }

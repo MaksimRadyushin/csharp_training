@@ -28,9 +28,7 @@ namespace Addressbook_web_tests
         }
         public ContactHelper Remove(int p)
         {
-
             manager.Navigator.OpenHomePage();
-            ValidationCreationContact();
             SelectContact(p);
             RemovalContact();
             ReturnHomePageContact();
@@ -39,7 +37,6 @@ namespace Addressbook_web_tests
         public ContactHelper Modify(int p, ContactAttributes newData)
         {
             manager.Navigator.OpenHomePage();
-            ValidationCreationContact();
             ModificationContact(p);
             FillContactForm(newData);
             SubmitContactModification();
@@ -91,7 +88,7 @@ namespace Addressbook_web_tests
             driver.FindElement(By.XPath("(//tbody//a[contains(@href,'edit')])[" + index + "]")).Click();
             return this;
         }
-        private void ValidationCreationContact()
+        public void ValidationCreationContact()
         {
             if (!IsElementPresent(By.Name("selected[]")))
             {

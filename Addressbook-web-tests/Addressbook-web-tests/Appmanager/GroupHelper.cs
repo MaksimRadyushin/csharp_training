@@ -31,7 +31,6 @@ namespace Addressbook_web_tests
         public GroupHelper Remove(int p)
         {
             manager.Navigator.OpenGroupsPage();
-            ValidationCreationGroup();
             SelectGroup(p);
             RemovalGroup();
             ReturnHomePageGroup();
@@ -41,7 +40,6 @@ namespace Addressbook_web_tests
         public GroupHelper Modify(int p, GroupAttributes newData)
         {
             manager.Navigator.OpenGroupsPage();
-            ValidationCreationGroup();
             SelectGroup(p);
             ModificationGroup();
             FillGroupForm(newData);
@@ -50,7 +48,7 @@ namespace Addressbook_web_tests
             return this;
         }
 
-        private void ValidationCreationGroup()
+        public void ValidationCreationGroup()
         {
             if (!IsElementPresent(By.Name("selected[]")))
             {
@@ -59,7 +57,6 @@ namespace Addressbook_web_tests
                 FillGroupForm(newGroup);
                 SubmitGroupCreation();
                 ReturnHomePageGroup();
-
             }
         }
 

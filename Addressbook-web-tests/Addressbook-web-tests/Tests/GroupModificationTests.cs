@@ -17,6 +17,8 @@ namespace Addressbook_web_tests
             newData.HeaderGroup = null;
             newData.FooterGroup = null;
 
+            app.Navigator.OpenGroupsPage();
+            app.Groups.ValidationCreationGroup();
             app.Groups.Modify(1, newData);
         }
     }

@@ -16,6 +16,8 @@ namespace Addressbook_web_tests
             ContactAttributes newData = new ContactAttributes("test");
             newData.MiddlenameContact = "test2";
 
+            app.Navigator.OpenHomePage();
+            app.Contacts.ValidationCreationContact();
             app.Contacts.Modify(1, newData);
            // app.Auth.Logout();
         }
