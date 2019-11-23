@@ -13,13 +13,23 @@ namespace Addressbook_web_tests
         [Test]
         public void ContactModificationTest()
         {
-            ContactAttributes newData = new ContactAttributes("test");
-            newData.MiddlenameContact = "test2";
+            ContactAttributes newData = new ContactAttributes("te455dsat","3JH545JH534");
+            //newData.LastnameContact = "test2";
 
             app.Navigator.OpenHomePage();
             app.Contacts.ValidationCreationContact();
-            app.Contacts.Modify(1, newData);
-           // app.Auth.Logout();
+
+            List<ContactAttributes> oldContacts = app.Contacts.GetContactList();
+
+            app.Contacts.Modify(0, newData);
+
+            List<ContactAttributes> newContacts = app.Contacts.GetContactList();
+            oldContacts[0].FirstnameContact = newData.FirstnameContact;
+            oldContacts[0].LastnameContact = newData.LastnameContact;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
+            // app.Auth.Logout();
         }
     }
 }

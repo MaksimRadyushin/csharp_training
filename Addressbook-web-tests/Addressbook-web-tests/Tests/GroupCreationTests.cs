@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Addressbook_web_tests 
@@ -17,8 +18,15 @@ namespace Addressbook_web_tests
             group.HeaderGroup = "543";
             group.FooterGroup = "5455";
 
+            List<GroupAttributes> oldGroups = app.Groups.GetGroupList();
+
             app.Groups.Create(group);
-           // app.Auth.Logout();
+
+            List<GroupAttributes> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }                   
     }
 }

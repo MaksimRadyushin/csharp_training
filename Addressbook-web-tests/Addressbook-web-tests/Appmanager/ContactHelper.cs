@@ -56,13 +56,13 @@ namespace Addressbook_web_tests
         }
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
         public ContactHelper FillContactForm(ContactAttributes contact)
         {
             Type(By.Name("firstname"), contact.FirstnameContact);
-            Type(By.Name("middlename"), contact.MiddlenameContact);
+            Type(By.Name("lastname"), contact.LastnameContact);
             return this;
         }
 
@@ -85,7 +85,7 @@ namespace Addressbook_web_tests
 
         public ContactHelper ModificationContact(int index)
         {
-            driver.FindElement(By.XPath("(//tbody//a[contains(@href,'edit')])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//tbody//a[contains(@href,'edit')])[" + (index+1) + "]")).Click();
             return this;
         }
         public void ValidationCreationContact()
@@ -93,13 +93,26 @@ namespace Addressbook_web_tests
             if (!IsElementPresent(By.Name("selected[]")))
             {
                 NewContact();
-                ContactAttributes newContact = new ContactAttributes("Maksim");
-                newContact.MiddlenameContact = "Radyushin";
+                ContactAttributes newContact = new ContactAttributes("Maksim","Radysuhin");
+                //newContact.LastnameContact = "Radyushin";
                 FillContactForm(newContact);
                 SubmitContactCreation();
                 ReturnHomePageContact();
 
             }
+        }
+        public List<ContactAttributes> GetContactList()
+        {
+            List<ContactAttributes> contacts = new List<ContactAttributes>();
+            manager.Navigator.OpenHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+            ICollection<IWebElement> cells = null;
+            foreach (IWebElement element in elements)
+            {
+                cells = element.FindElements(By.TagName("td"));
+                contacts.Add(new ContactAttributes(cells.ElementAt(2).Text, cells.ElementAt(1).Text));
+            }
+            return contacts;
         }
     }
 }

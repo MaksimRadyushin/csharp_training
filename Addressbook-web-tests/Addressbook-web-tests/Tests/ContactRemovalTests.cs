@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Addressbook_web_tests
@@ -15,8 +16,15 @@ namespace Addressbook_web_tests
         {
             app.Navigator.OpenHomePage();
             app.Contacts.ValidationCreationContact();
-            app.Contacts.Remove(1);
-           // app.Auth.Logout();
+
+            List<ContactAttributes> oldContacts = app.Contacts.GetContactList();
+
+            app.Contacts.Remove(0);
+
+            List<ContactAttributes> newContacts = app.Contacts.GetContactList();
+
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
