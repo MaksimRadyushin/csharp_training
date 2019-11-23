@@ -69,7 +69,8 @@ namespace Addressbook_web_tests
         public GroupHelper RemovalGroup()
         {
 
-            driver.FindElement(By.Name("delete")).Click(); ;
+            driver.FindElement(By.Name("delete")).Click();
+            groupCache = null;
             return this;
         }
         public GroupHelper SelectGroup(int index)
@@ -90,6 +91,7 @@ namespace Addressbook_web_tests
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            groupCache = null;
             return this;
         }
 
@@ -101,6 +103,7 @@ namespace Addressbook_web_tests
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            groupCache = null;
             return this;
         }
 
@@ -110,16 +113,21 @@ namespace Addressbook_web_tests
             return this;
         }
 
+        private List<GroupAttributes> groupCache = null;
+
         public List<GroupAttributes> GetGroupList()
         {
-            List<GroupAttributes> groups = new List<GroupAttributes>();
-            manager.Navigator.OpenGroupsPage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-            foreach (IWebElement element in elements)
+            if (groupCache == null)
             {
-                groups.Add(new GroupAttributes(element.Text));
+                groupCache = new List<GroupAttributes>();
+                manager.Navigator.OpenGroupsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    groupCache.Add(new GroupAttributes(element.Text));
+                }
             }
-            return groups;
+            return new List<GroupAttributes>(groupCache);
         }
     }
 }

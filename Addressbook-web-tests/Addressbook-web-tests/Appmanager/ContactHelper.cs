@@ -51,6 +51,7 @@ namespace Addressbook_web_tests
         public ContactHelper RemovalContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactCache = null;
             driver.SwitchTo().Alert().Accept();
             return this;
         }
@@ -69,6 +70,7 @@ namespace Addressbook_web_tests
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -80,6 +82,7 @@ namespace Addressbook_web_tests
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -101,18 +104,24 @@ namespace Addressbook_web_tests
 
             }
         }
+
+        private List<ContactAttributes> contactCache = null;
+
         public List<ContactAttributes> GetContactList()
         {
-            List<ContactAttributes> contacts = new List<ContactAttributes>();
-            manager.Navigator.OpenHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
-            ICollection<IWebElement> cells = null;
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                cells = element.FindElements(By.TagName("td"));
-                contacts.Add(new ContactAttributes(cells.ElementAt(2).Text, cells.ElementAt(1).Text));
+                contactCache = new List<ContactAttributes>();
+                manager.Navigator.OpenHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+                ICollection<IWebElement> cells = null;
+                foreach (IWebElement element in elements)
+                {
+                    cells = element.FindElements(By.TagName("td"));
+                    contactCache.Add(new ContactAttributes(cells.ElementAt(2).Text, cells.ElementAt(1).Text));
+                }
             }
-            return contacts;
+            return new List<ContactAttributes>(contactCache);
         }
     }
 }
