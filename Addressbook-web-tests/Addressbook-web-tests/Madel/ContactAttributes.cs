@@ -11,6 +11,7 @@ namespace Addressbook_web_tests
     {
         private string allEmails;
         private string allPhones;
+        private string aboutContact;
 
         public ContactAttributes(string firstnameContact, string lastnameContact)
         {
@@ -83,7 +84,7 @@ namespace Addressbook_web_tests
                 }
                 else
                 {
-                    return Email+ "\r\n" + Email2 + "\r\n" + Email3;
+                    return (CleanEmail(Email) + CleanEmail(Email2) + CleanEmail(Email3)).Trim();
                 }
             }
             set
@@ -117,7 +118,59 @@ namespace Addressbook_web_tests
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return Regex.Replace(phone, "[- ()]", "") + "\r\n";
+        }
+
+        private string CleanEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return Regex.Replace(email, "[ ]", "") + "\r\n";
+        }
+
+        private string CleanAddress(string address)
+        {
+            if (address == null || address == "")
+            {
+                return "";
+            }
+            return Regex.Replace(address, "[ ]", "") + "\r\n";
+        }
+
+        public string AboutContact
+        {
+            get
+            {
+                if (aboutContact != null)
+                {
+                    return aboutContact;
+                }
+
+                else
+                {
+                    if (HomePhone != null)
+                    { 
+                        HomePhone = "H: " + HomePhone + "\r\n"; 
+                    }
+                    if (MobilePhone != null)
+                    {
+                        MobilePhone = "M: " + MobilePhone + "\r\n"; 
+                    }
+                    if (WorkPhone != null)
+                    {
+                        WorkPhone = "W: " + WorkPhone + "\r\n"; 
+                    }
+
+                    return (FirstnameContact + " " + LastnameContact + "\r\n" + Address + "\r\n" + "\r\n" + HomePhone + MobilePhone + WorkPhone + "\r\n" + AllEmails).Trim();
+                }
+            }
+            set
+            {
+                aboutContact = value;
+            }
+
         }
     }
 }

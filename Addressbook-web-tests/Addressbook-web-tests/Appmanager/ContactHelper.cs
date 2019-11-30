@@ -17,6 +17,21 @@ namespace Addressbook_web_tests
         {
         }
 
+        public String GetContactInformationFromDetailsForm(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            DetailsContact(index);
+            string contactDetails = driver.FindElement(By.XPath("//div[@id = 'content']")).Text;
+
+            return contactDetails;
+        }
+
+        public ContactHelper DetailsContact(int index)
+        {
+            driver.FindElement(By.XPath("(//tbody//a[contains(@href,'view')])[" + (index + 1) + "]")).Click();
+            return this;
+        }
+
         public ContactAttributes GetContactInformationFromTable(int index)
         {
             manager.Navigator.OpenHomePage();
