@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\ContactInformationTests.cs" />
     <Compile Include="Tests\AuthTestBase.cs" />
     <Compile Include="Madel\AccounData.cs" />
     <Compile Include="Appmanager\ApplicationManager.cs" />

@@ -16,6 +16,55 @@ namespace Addressbook_web_tests
             : base(manager)
         {
         }
+
+        public ContactAttributes GetContactInformationFromTable(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allEmail = cells[4].Text;
+            string allPhone = cells[5].Text;
+
+            return new ContactAttributes(firstName, lastName)
+            {
+                Address = address,
+                AllEmails = allEmail,
+                AllPhones = allPhone,
+            };
+
+
+        }
+
+        public ContactAttributes GetContactInformationFromEditForm(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            ModificationContact(index);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            return new ContactAttributes(firstName, lastName)
+            {
+                Address = address,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+            };
+            
+        }
+
         public ContactHelper Create(ContactAttributes contact)
         {
 
@@ -64,6 +113,13 @@ namespace Addressbook_web_tests
         {
             Type(By.Name("firstname"), contact.FirstnameContact);
             Type(By.Name("lastname"), contact.LastnameContact);
+            Type(By.Name("address"), contact.Address);
+            Type(By.Name("home"), contact.HomePhone);
+            Type(By.Name("mobile"), contact.MobilePhone);
+            Type(By.Name("work"), contact.WorkPhone);
+            Type(By.Name("email"), contact.Email);
+            Type(By.Name("email2"), contact.Email2);
+            Type(By.Name("email3"), contact.Email3);
             return this;
         }
 

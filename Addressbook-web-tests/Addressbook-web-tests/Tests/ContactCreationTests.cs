@@ -1,9 +1,5 @@
-﻿using System;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace Addressbook_web_tests
 {
@@ -13,8 +9,15 @@ namespace Addressbook_web_tests
         [Test]
         public void ContactCreationTest()
         {
-            ContactAttributes contact = new ContactAttributes("89984444899", "5554445");
-            //contact.LastnameContact = "5455545";
+            ContactAttributes contact = new ContactAttributes("00jfjghf", "jhgj545454h");
+            contact.Address = "1";
+            contact.HomePhone = "8(999)-764-55-55";
+            contact.MobilePhone = "3";
+            contact.WorkPhone = "4";
+            contact.Email = "5";
+            contact.Email2 = "6";
+            contact.Email3 = "7";
+
 
             List<ContactAttributes> oldContacts = app.Contacts.GetContactList();
 

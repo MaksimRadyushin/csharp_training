@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Addressbook_web_tests
 {
    public class ContactAttributes : IEquatable<ContactAttributes>, IComparable<ContactAttributes>
     {
-        private string firstnameContact;
-        private string lastnameContact ;
+        private string allEmails;
+        private string allPhones;
 
         public ContactAttributes(string firstnameContact, string lastnameContact)
         {
-            this.firstnameContact = firstnameContact;
-            this.lastnameContact = lastnameContact;
+            FirstnameContact = firstnameContact;
+            LastnameContact = lastnameContact;
         }
 
         public bool Equals(ContactAttributes other)
@@ -54,28 +55,69 @@ namespace Addressbook_web_tests
             
         }
 
-        public string FirstnameContact
+        public string FirstnameContact { get; set; }
+
+        public string LastnameContact { get; set; }
+
+        public string Address { get; set; }
+
+        public string HomePhone { get; set; }
+
+        public string MobilePhone { get; set; }
+
+        public string WorkPhone { get; set; }
+
+        public string Email { get; set; }
+
+        public string Email2 { get; set; }
+
+        public string Email3 { get; set; }
+
+        public string AllEmails
         {
             get
             {
-                return firstnameContact;
+                if(allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return Email+ "\r\n" + Email2 + "\r\n" + Email3;
+                }
             }
             set
             {
-                firstnameContact = value;
+                allEmails = value;
             }
         }
 
-        public string LastnameContact
+        public string AllPhones
         {
             get
             {
-                return lastnameContact;
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                }
             }
             set
             {
-                lastnameContact = value;
+                allPhones = value;
             }
+        }
+
+        private string CleanUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
     }
 }
