@@ -11,13 +11,23 @@ namespace Addressbook_web_tests
     public class GroupCreationTests : AuthTestBase
     {
         
-        [Test]
-        public void GroupCreationTest()
+        public static IEnumerable<GroupAttributes> RandomGroupDataProvider()
         {
-            GroupAttributes group = new GroupAttributes("Majssdd");
-            group.HeaderGroup = "543";
-            group.FooterGroup = "5455";
+            List<GroupAttributes> groups = new List<GroupAttributes>();
+            for (int i = 0; i < 5; i++)
+            {
+                groups.Add(new GroupAttributes(GenerateRandomString(30))
+                {
+                    HeaderGroup = GenerateRandomString(100),
+                    FooterGroup = GenerateRandomString(100)
+                });
+            }
+            return groups;
+        }
 
+        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public void GroupCreationTest(GroupAttributes group)
+        {
             List<GroupAttributes> oldGroups = app.Groups.GetGroupList();
 
             app.Groups.Create(group);
