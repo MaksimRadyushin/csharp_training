@@ -12,12 +12,13 @@ namespace Addressbook_web_tests
         private string allEmails;
         private string allPhones;
         private string aboutContact;
+        public ContactAttributes() { }
 
         public ContactAttributes(string firstnameContact, string lastnameContact)
         {
             FirstnameContact = firstnameContact;
             LastnameContact = lastnameContact;
-        }
+    }
 
         public bool Equals(ContactAttributes other)
         {

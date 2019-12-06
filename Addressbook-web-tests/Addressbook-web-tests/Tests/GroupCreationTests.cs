@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
 
 namespace Addressbook_web_tests 
@@ -25,7 +26,25 @@ namespace Addressbook_web_tests
             return groups;
         }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+
+        public static IEnumerable<GroupAttributes> GroupDataFromFile()
+        {
+            List<GroupAttributes> groups = new List<GroupAttributes>();
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                groups.Add(new GroupAttributes(parts[0])
+                {
+                    HeaderGroup = parts[1],
+                    FooterGroup = parts[2]
+                });
+            }
+                return groups;
+        }
+
+
+       [Test, TestCaseSource("GroupDataFromFile")]
         public void GroupCreationTest(GroupAttributes group)
         {
             List<GroupAttributes> oldGroups = app.Groups.GetGroupList();

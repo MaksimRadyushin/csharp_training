@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
+
 
 namespace Addressbook_web_tests
 {
@@ -25,7 +27,29 @@ namespace Addressbook_web_tests
             return contact;
         }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]
+        public static IEnumerable<ContactAttributes> ContactDataFromFile()
+        {
+            List<ContactAttributes> contacts = new List<ContactAttributes>();
+            string[] lines = File.ReadAllLines(@"contacts.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                contacts.Add(new ContactAttributes(parts[0], parts[1])
+                {
+                    Address = parts[2],
+                    HomePhone = parts[3],
+                    MobilePhone = parts[4],
+                    WorkPhone = parts[5],
+                    Email = parts[6],
+                    Email2 = parts[7],
+                    Email3 = parts[8]
+                });
+            }
+            return contacts;
+        }
+
+
+        [Test, TestCaseSource("ContactDataFromFile")]
         public void ContactCreationTest(ContactAttributes contact)
         {
 
