@@ -11,6 +11,13 @@ namespace Addressbook_web_tests
             private string nameGroup;
             private string headerGroup = "";
             private string footerGroup = "";
+
+
+        public GroupAttributes()
+        {
+        }
+
+
         public GroupAttributes(string nameGroup)
         {
             this.nameGroup = nameGroup;

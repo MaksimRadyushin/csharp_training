@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
+using System.Xml;
 
 
 namespace Addressbook_web_tests
@@ -27,7 +29,7 @@ namespace Addressbook_web_tests
             return contact;
         }
 
-        public static IEnumerable<ContactAttributes> ContactDataFromFile()
+        public static IEnumerable<ContactAttributes> ContactDataFromCsvFile()
         {
             List<ContactAttributes> contacts = new List<ContactAttributes>();
             string[] lines = File.ReadAllLines(@"contacts.csv");
@@ -48,8 +50,14 @@ namespace Addressbook_web_tests
             return contacts;
         }
 
+        public static IEnumerable<ContactAttributes> ContactDataFromXmlFile()
+        {
+            return (List<ContactAttributes>)
+                 new XmlSerializer(typeof(List<ContactAttributes>))
+                 .Deserialize(new StreamReader(@"contacts.xml"));
+        }
 
-        [Test, TestCaseSource("ContactDataFromFile")]
+        [Test, TestCaseSource("ContactDataFromXmlFile")]
         public void ContactCreationTest(ContactAttributes contact)
         {
 
