@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LinqToDB.Mapping;
 
 namespace Addressbook_web_tests
 {
-   public class GroupAttributes : IEquatable<GroupAttributes>, IComparable<GroupAttributes>
+    [Table(Name = "group_list")]
+    public class GroupAttributes : IEquatable<GroupAttributes>, IComparable<GroupAttributes>
     {
             private string nameGroup;
             private string headerGroup = "";
@@ -57,7 +59,8 @@ namespace Addressbook_web_tests
         }
 
 
-            public string NameGroup
+        [Column(Name = "group_name"), NotNull]
+        public string NameGroup
             {
                 get
                 {
@@ -69,7 +72,9 @@ namespace Addressbook_web_tests
                 }
             }
 
-            public string HeaderGroup
+
+        [Column(Name = "group_header"), NotNull]
+        public string HeaderGroup
             {
                 get
                 {
@@ -81,7 +86,9 @@ namespace Addressbook_web_tests
                 }
             }
 
-            public string FooterGroup
+
+        [Column(Name = "group_footer"), NotNull]
+        public string FooterGroup
             {
                 get
                 {
@@ -92,6 +99,18 @@ namespace Addressbook_web_tests
                     footerGroup = value;
                 }
             }
+
+
+        [Column(Name = "group_id"), PrimaryKey, Identity]
+        public string Id { get; set; }
+
+        public static List<GroupAttributes> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Groups select g).ToList();
+            }
+        }
     }
 }
 

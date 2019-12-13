@@ -8,7 +8,7 @@ using System.Xml;
 namespace Addressbook_web_tests
 {
     [TestFixture]
-    public class ContactCreationTests : AuthTestBase
+    public class ContactCreationTests : GroupTestBase
     {
 
         public static IEnumerable<ContactAttributes> RandomContactDataProvider()
@@ -73,11 +73,11 @@ namespace Addressbook_web_tests
             //contact.Email3 = "7";
 
 
-            List<ContactAttributes> oldContacts = app.Contacts.GetContactList();
+            List<ContactAttributes> oldContacts = ContactAttributes.GetAll();
 
             app.Contacts.Create(contact);
 
-            List<ContactAttributes> newContacts = app.Contacts.GetContactList();
+            List<ContactAttributes> newContacts = ContactAttributes.GetAll();
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();

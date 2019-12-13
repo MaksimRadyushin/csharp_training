@@ -7,11 +7,12 @@ using System.IO;
 using NUnit.Framework;
 using System.Xml.Serialization;
 using System.Xml;
+using System.Linq;
 
 namespace Addressbook_web_tests 
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         
         public static IEnumerable<GroupAttributes> RandomGroupDataProvider()
@@ -56,15 +57,29 @@ namespace Addressbook_web_tests
         [Test, TestCaseSource("GroupDataFromXmlFile")]
         public void GroupCreationTest(GroupAttributes group)
         {
-            List<GroupAttributes> oldGroups = app.Groups.GetGroupList();
+            List<GroupAttributes> oldGroups = GroupAttributes.GetAll();
 
             app.Groups.Create(group);
 
-            List<GroupAttributes> newGroups = app.Groups.GetGroupList();
+            List<GroupAttributes> newGroups = GroupAttributes.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
-        }                   
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupAttributes> fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupAttributes> fromDB = GroupAttributes.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+        }
     }
 }

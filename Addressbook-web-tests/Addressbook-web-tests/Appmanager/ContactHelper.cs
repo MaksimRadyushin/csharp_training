@@ -98,6 +98,15 @@ namespace Addressbook_web_tests
             ReturnHomePageContact();
             return this;
         }
+        public ContactHelper Remove(ContactAttributes contact)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectContact(contact.Id);
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+            ReturnHomePageContact();
+            return this;
+        }
         public ContactHelper Modify(int p, ContactAttributes newData)
         {
             manager.Navigator.OpenHomePage();
@@ -124,6 +133,12 @@ namespace Addressbook_web_tests
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name = 'selected[]' and @value='" + id + "']")).Click();
+            return this;
+        }
+
         public ContactHelper FillContactForm(ContactAttributes contact)
         {
             Type(By.Name("firstname"), contact.FirstnameContact);
