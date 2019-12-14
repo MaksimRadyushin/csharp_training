@@ -58,6 +58,15 @@ namespace Addressbook_web_tests
             return this;
         }
 
+        public GroupHelper AddGroup()
+        {
+                NewGroup();
+                GroupAttributes newGroup = new GroupAttributes("newGroup");
+                FillGroupForm(newGroup);
+                SubmitGroupCreation();
+                ReturnHomePageGroup();
+            return this;
+        }
         public void ValidationCreationGroup()
         {
             if (!IsElementPresent(By.Name("selected[]")))

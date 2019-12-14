@@ -128,6 +128,12 @@ namespace Addressbook_web_tests
             driver.SwitchTo().Alert().Accept();
             return this;
         }
+        public ContactHelper RemovalContactsFromGroup()
+        {
+            driver.FindElement(By.XPath("//input[@name='remove']")).Click();
+            contactCache = null;
+            return this;
+        }
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
@@ -191,6 +197,17 @@ namespace Addressbook_web_tests
             }
         }
 
+        public ContactHelper AddContact()
+        {
+                NewContact();
+                ContactAttributes newContact = new ContactAttributes("Maksim", "Radysuhin");
+                //newContact.LastnameContact = "Radyushin";
+                FillContactForm(newContact);
+                SubmitContactCreation();
+                ReturnHomePageContact();
+            return this;
+        }
+
         private List<ContactAttributes> contactCache = null;
 
         public List<ContactAttributes> GetContactList()
@@ -208,6 +225,45 @@ namespace Addressbook_web_tests
                 }
             }
             return new List<ContactAttributes>(contactCache);
+        }
+
+        public void AddContactToGroup(ContactAttributes contact, GroupAttributes group)
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelctGroupToAdd(group.NameGroup);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void RemoveContactFromGroup(ContactAttributes contact, GroupAttributes group)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectGroupInFilter(group.NameGroup);
+            SelectContact(0);
+            RemovalContactsFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(15)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+
+        }
+
+        private void SelectGroupInFilter(string nameGroup)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(nameGroup);
+        }
+        private void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelctGroupToAdd(string nameGroup)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(nameGroup);
+        }
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
     }
 }

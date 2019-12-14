@@ -71,6 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Madel\AddressBookDB.cs" />
+    <Compile Include="Madel\GroupContactRelation.cs" />
+    <Compile Include="Tests\AddingContactToGroupTests.cs" />
     <Compile Include="Tests\ContactDetailsInformationTests.cs" />
     <Compile Include="Tests\ContactInformationTests.cs" />
     <Compile Include="Tests\AuthTestBase.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Tests\ContactCreationTests.cs" />
     <Compile Include="Tests\GroupTestBase.cs" />
     <Compile Include="Tests\LoginTests.cs" />
+    <Compile Include="Tests\RemovalContactFromGroup.cs" />
     <Compile Include="Tests\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>
